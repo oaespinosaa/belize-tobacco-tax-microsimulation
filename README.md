@@ -13,7 +13,7 @@ Documentation for the R script pipeline that estimates the effect of tobacco tax
 
 1. **Edit the project path** — in `0_Master.R` (line 12), change `old_wd <- "/Belize Tobacco"` to the local path.
 2. **Install the packages** tidyverse, readxl, parallel.
-3. **Place the input data** exactly where the scripts expect it (see [Input data](#input-data)).
+3. **Place the input data** exactly where the scripts expect it.
 4. **Run `0_Master.R` in full.** This loads the libraries, sources the 4 scripts, defines `tobacco_taxes()`, and runs the nested loop over elasticities, with Monte Carlo replicates parallelized. This is computationally intensive; for testing, reduce `NSim` and/or the elasticity/tax/market vectors before running the full pipeline.
 6. **Run `5_Figures.R` separately**, in the same R session (it reuses `old_wd`, `tidyverse`, and `scales` already loaded), once every `lbecea_*/` folder with its `TD_Nal.rds` exists. This script builds `tab_sum` (one summary row per scenario) and produces exploratory charts across the scenarios.
 
