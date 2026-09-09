@@ -35,7 +35,7 @@ Each output folder's name (`` lbecea_<porc_tax*100>_<porc_illicit*100>_<abs(elas
 #### Structural parameters (`fn_par()` function in `1_Inputs.R`)
 
 | Parameter | Value / formula | Description |
-|---|---|---|---|
+|---|---|---|
 | `CQuitYouth` | 2.0 | Extensive-margin (quitting) multiplier for `CAgeGroup` ≤ 5 (ages 0-24) | 
 | `ECopayInsu` | 0.67 | Share of the population with health insurance | 
 | `ECopayReim` | 1.0 | Insurance reimbursement rate | 
