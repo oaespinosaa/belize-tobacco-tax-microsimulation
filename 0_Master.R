@@ -19,12 +19,12 @@ source("3_Simu.R")
 source("4_Outputs.R")
 
 # Function to extract the final table according to the parameters
-tobacco_taxes <- function(porc_tax,porc_illicit,elasticity,porc_market,
+tobacco_taxes <- function(porc_tax,porc_illicit,porc_pass,elasticity,porc_market,
                           Sim = TRUE,NSim = 200,parallel_sims = TRUE,ncores = 8L){
   
-  lbecea  <- paste0(old_wd,"/lbecea_",porc_tax*100,'_',porc_illicit*100,'_',abs(elasticity),'_',porc_market*100)
+  lbecea  <- paste0(old_wd,"/lbecea_",porc_tax*100,'_',porc_illicit*100,'_',porc_pass,'_',abs(elasticity),'_',porc_market*100)
   if (!dir.exists(lbecea)) dir.create(lbecea, recursive = TRUE)
-  par <- fn_par(porc_tax,porc_illicit,elasticity,porc_market)
+  par <- fn_par(porc_tax,porc_illicit,porc_pass,elasticity,porc_market)
   
   saveRDS(HRiskRedu,file.path(lbecea, "HRiskRedu.rds"))
   saveRDS(HLiYeGain,file.path(lbecea, "HLiYeGain.rds"))
@@ -91,16 +91,19 @@ tobacco_taxes <- function(porc_tax,porc_illicit,elasticity,porc_market,
 
 # Execute function
 # porc_illicit <- 0.13
-for (e in c(-0.3785,-0.77)){
-for (t in seq(0.3,0.7,0.05)){
-  for (m in c(0.045,0.02,0)){
-porc_tax <- t
-elasticity <- e
-porc_market <- m
-tobacco_taxes(porc_tax,porc_illicit,elasticity,porc_market,TRUE,200,TRUE,8L)
-print(paste(e,t,m))
-}
-}
+for (pp in c(1.1,1.2,1.3)){
+  for (e in c(-0.3785,-0.55,-0.77)){
+    for (t in c(0.3,0.5,0.7)){
+      for (m in c(0.045,0.02,0)){
+        porc_pass <- pp
+        porc_tax <- t
+        elasticity <- e
+        porc_market <- m
+        tobacco_taxes(porc_tax,porc_illicit,porc_pass,elasticity,porc_market,TRUE,200,TRUE,8L)
+        print(paste(pp,e,t,m))
+      }
+    }
+  }
 }
 # tobacco_taxes(0.5,0.13,-0.3785)
 # tobacco_taxes(0.65,0.13,-0.3785)

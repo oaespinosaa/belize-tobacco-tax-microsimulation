@@ -1,7 +1,7 @@
 # This script defines the function for structural parameters (taxes/prices), 
 # builds key lookup tables and baseline inputs used by the microsimulation pipeline.
 
-fn_par <- function(porc_tax,porc_illicit,elasticity,porc_market){
+fn_par <- function(porc_tax,porc_illicit,porc_pass,elasticity,porc_market){
   
   # ---- PARAMETERS 
   par <- list(
@@ -41,7 +41,7 @@ fn_par <- function(porc_tax,porc_illicit,elasticity,porc_market){
     # Price
     SPriRetMaPre = 0.15, # Retail Margin
     # Rates
-    STaxPassSpePre = 1.2, # Pass-Through Specific (excise)
+    STaxPassSpePre = porc_pass, #1.2, # Pass-Through Specific (excise)
     STaxRaAdvPre = 0, # AdValorem (excise)
     STaxRaVatPre = 0.125, # Value Added Vat https://bts.gov.bz/gst-faq/
     # Values
@@ -77,6 +77,37 @@ fn_par <- function(porc_tax,porc_illicit,elasticity,porc_market){
   par$STaxIbpAdvPre = par$STaxVaAdvPre/par$STaxRaAdvPre
   par$STaxIbpAdvPos = par$STaxVaAdvPos/par$STaxRaAdvPos
   
+  # Exwork
+  # Manufacturing Cost
+  # par$SExwManCoPos = par$SExwManCoPre
+  # # Manufacturing Profit Rate
+  # par$SExwMinProRaPos = par$SExwMinProRaPre
+  # # Manufacturing Profit
+  # par$SExwManProPre = par$SExwManCoPre*par$SExwMinProRaPre + (par$STaxPassSpePre-1)*par$STaxVaSpePre
+  # par$SExwManProPos = par$SExwManCoPos*par$SExwMinProRaPos + (par$STaxPassSpePos-1)*par$STaxVaSpePos
+  # # Price Exwork with no taxes (excise)
+  # par$SExwPriNoExciPre = par$SExwManCoPre + par$SExwManProPre
+  # par$SExwPriNoExciPos = par$SExwManCoPos + par$SExwManProPos
+  # # Profit Rate
+  # par$SExwProRaPre = (par$SExwPriNoExciPre - par$SExwManCoPre) / par$SExwManCoPre
+  # par$SExwProRaPos = (par$SExwPriNoExciPos - par$SExwManCoPos) / par$SExwManCoPos
+  # 
+  # # Price
+  # # Price Exwork with Taxes
+  # par$SPriPrExwTaxPre = par$SExwPriNoExciPre + (par$STaxVaSpePre + par$STaxVaAdvPre + par$STaxVaVatPre)
+  # par$SPriPrExwTaxPos = par$SExwPriNoExciPos + (par$STaxVaSpePos + par$STaxVaAdvPos + par$STaxVaVatPos)
+  # # Distribution Margin
+  # par$SPriDisMaPos = par$SPriDisMaPre
+  # # Retail Margin
+  # par$SPriRetMaPos = par$SPriRetMaPre
+  # # Retail Price
+  # par$SPriPrRetaPre = par$SPriPrExwTaxPre*(1 + par$SPriRetMaPre + par$SPriRetMaPre)
+  # par$SPriPrRetaPos = par$SPriPrExwTaxPos*(1 + par$SPriRetMaPos + par$SPriRetMaPos)
+  # # Rounded
+  # par$SPriPrRetaPreRou = round(par$SPriPrRetaPre,2)
+  # par$SPriPrRetaPosRou = round(par$SPriPrRetaPos,2)
+  # Retail Price Increase
+  # par$SPriceIncrease = (par$SPriPrRetaPos - par$SPriPrRetaPre)/par$SPriPrRetaPre
   par$SPriceIncrease = (par$STaxIbpVatPos - par$STaxIbpVatPre)/par$STaxIbpVatPre
   
   # COSTS (Million COP$ per year per peson - Annual)
