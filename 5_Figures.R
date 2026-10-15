@@ -164,7 +164,6 @@ fig_var(tab_sum,"",c("ECostAver","ECostHeartAver","ECostStroAver","ECostCopdAver
 # Outcomes with illicit trade
 fig_var(tab_sum,"CPreCigIllTra","CPosCigIllTra","Cigarettes illicit trade","I")
 fig_var(tab_sum,"TRevPreSpeSmo","TRevPosSpeSmo","Tax revenues specific","I")
-fig_var(tab_sum,"TProfPreSmo","TProfPosSmo","Industry profits","I")
 fig_var(tab_sum,c("CPreTaxCigTot","CPreCigIllTra"),
         c("CPosTaxCigTot","CPosCigIllTra"),"Packs","I2")
 
